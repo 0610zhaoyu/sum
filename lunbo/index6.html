@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}	
+		.main{
+			width: 900px;
+			height: 200px;
+			border: 1px solid #ddd;
+			margin: 200px auto;
+			position: relative;
+			overflow: hidden;
+		}
+		.ul1{
+			position: relative;
+			width: 900px;
+			height: 200px;
+		}
+		.ul1 li{
+			position: absolute;
+		}
+		.ul2{
+			position: absolute;
+			top:160px;
+			left: 400px;
+			z-index: 5;
+		}
+		.ul2 li{
+			float: left;
+			margin: 5px;
+			background: #fff;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;		
+		}
+		.btn{
+			width: 30px;
+			height: 50px;
+			position: absolute;
+			top: 75px;
+			background: rgba(0,0,0,0.3);
+			text-align: center;
+			line-height: 50px;
+			color: #fff;
+			z-index: 5;
+		}
+		.btn1{
+			left: 0;
+		}
+		.btn2{
+			right: 0;
+		}
+	</style>
+	<script src="js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function(){
+			var arr = [
+				{
+					'width':500,
+					'height':200,
+					'opacity':1,
+					'zIndex':3,
+					'top':0,
+					'left':200
+				},
+				{
+					'width':400,
+					'height':160,
+					'opacity':1,
+					'zIndex':2,
+					'top':20,
+					'left':600
+				},
+				{
+					'width':400,
+					'height':160,
+					'opacity':0,
+					'zIndex':1,
+					'top':20,
+					'left':900
+				},
+				{
+					'width':400,
+					'height':160,
+					'opacity':0,
+					'zIndex':1,
+					'top':20,
+					'left':-400
+				},
+				{
+					'width':400,
+					'height':160,
+					'opacity':1,
+					'zIndex':2,
+					'top':20,
+					'left':-100
+				}				
+			]
+			
+			$('.ul1 li').each(function(i){
+				$('.ul1 li').eq(i).css({
+					'width':arr[i].width,
+					'height':arr[i].height,
+					'opacity':arr[i].opacity,
+					'z-index':arr[i].zIndex,
+					'top':arr[i].top,
+					'left':arr[i].left,
+				})
+				
+			})
+			var $n = 0;
+			function start(){
+	
+				$('.ul1 li').each(function(i){
+					$('.ul1 li').eq(i).stop().animate({
+						'width':arr[i].width,
+						'height':arr[i].height,
+						'opacity':arr[i].opacity,
+						'z-index':arr[i].zIndex,
+						'top':arr[i].top,
+						'left':arr[i].left,
+					},200,function(){
+						$('.ul1 li').each(function(){
+							if($(this).width()==500){
+								$n = $(this).index();
+							}
+						})
+						$('.ul2>li').eq($n).css('background','pink').siblings().css('background','#fff');
+						
+						
+					})
+				
+				})
+				
+			}
+			var timer = setInterval(function(){
+				arr.unshift(arr.pop());
+				start();
+			},3000)
+			
+			
+			$('.btn1').click(function(){
+				clearInterval(timer)
+				arr.push(arr.shift());				
+				start();
+				timer =setInterval(function(){
+					arr.unshift(arr.pop());
+					start();
+				},3000);
+				
+			})
+			$('.btn2').click(function(){
+				clearInterval(timer);
+				arr.unshift(arr.pop());
+				start();
+				timer =setInterval(function(){
+					arr.unshift(arr.pop());
+					start();
+				},3000);
+			})
+			
+			
+		})
+	</script>
+	<body>
+		<div class="main">
+			<ul class="ul1">
+				<li style="background: #f00;">1</li>
+				<li style="background: #0f0;">2</li>
+				<li style="background: #00f;">3</li>
+				<li style="background: #ff0;">4</li>
+				<li style="background: #0ff;">5</li>
+			</ul>
+			<ul class="ul2">
+				<li style="background: pink;"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<div class="btn btn1">&lt;</div>
+			<div class="btn btn2">&gt;</div>
+		</div>
+	</body>
+</html>

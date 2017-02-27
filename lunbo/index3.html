@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			li{
+				list-style: none;
+			}
+			a{
+				text-decoration: none;
+			}
+			.box{
+				width: 598px;
+				height: 388px;
+				border: 1px solid #CCCCCC;
+				margin: 100px auto;
+				position: relative;
+				overflow: hidden;
+			}
+			.img1{
+				position: absolute;
+				left: 0;
+				top: 0;
+				z-index: 10;
+			}
+			.box>.ul1>li>a>img{
+				margin-top: 14px;
+			}
+			.box>.ul1>li>a{
+				float: left;
+				position: relative;
+			}
+			.box>.ul1>li>a>.p1{
+				width: 70px;
+				height: 70px;
+				background: url(img/price.png) no-repeat center;
+				font-size: 20px;
+				color: #FFFFFF;
+				line-height: 78px;
+				text-align: center;
+				font-weight: bolder;
+				position: absolute;
+				top: 300px;
+				left: 122px;
+			}
+			.box>.ul1{
+				width: 1794px;
+				position: absolute;
+			}
+			.box>.ul1>li{
+				float: left;
+				width: 598px;
+			}
+			.box>.ul2{
+				width: 100px;
+				position: absolute;
+				left: 250px;
+				top: 350px;
+			}
+			.box>.ul2>li{
+				width: 10px;
+				height: 10px;
+				background: #CCCCCC;
+				border-radius: 50%;
+				float: left;
+				margin: 10px;
+			}
+			.box>.ul2>.list1{
+				background: red;
+			}
+		</style>
+		<script src="js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$index = 0;
+				$l = $('.ul1>li').size();
+				$width1 = $('.ul1>li').width();
+				$bol = true;
+				var timer = null;
+				function start(){
+					$('.ul1').stop().animate({'left':-$width1*$index},1000);
+					$('.ul2>li').eq($index).addClass('list1').siblings().removeClass('list1');
+				}
+				function move(){
+					if ($index>=$l-1) {
+						$bol=false;
+					}else if($index<=0){
+						$bol=true;
+					}
+					if ($bol) {
+						$index++;
+					}else{
+						$index--;
+					}				
+					start();
+				}
+				timer = setInterval(move,3000);
+				$('.ul2>li').hover(function(){
+					clearInterval(timer);
+					$index = $(this).index();
+					start();
+				},function(){
+					timer = setInterval(move,3000);
+				})
+			})
+		</script>
+	</head>
+	<body>
+		<div class="box">
+			<img class="img1" src="img/hot.png" />
+			<ul class="ul1">
+				<li>					
+					<a href="javascript:void(0);"><img src="img/img1.JPG" /><div class="p1">68.0</div></a>
+				</li>
+				<li>					
+					<a href="javascript:void(0);"><img src="img/img1.png" /><div class="p1">68.0</div></a>
+				</li>
+				<li>					
+					<a href="javascript:void(0);"><img src="img/img1.jpg" /><div class="p1">68.0</div></a>
+				</li>
+			</ul>
+			<ul class="ul2">
+				<li class="list1"></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</body>
+</html>
